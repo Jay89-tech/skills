@@ -1,3 +1,6 @@
+// lib/models/skill_model.dart
+import '../utils/enums.dart';
+
 class Skill {
   final String id;
   final String userId;
@@ -28,11 +31,17 @@ class Skill {
       id: json['id'],
       userId: json['user_id'],
       name: json['name'],
-      category: SkillCategory.values.firstWhere((e) => e.toString().split('.').last == json['category']),
-      proficiency: ProficiencyLevel.values.firstWhere((e) => e.toString().split('.').last == json['proficiency']),
+      category: SkillCategory.values.firstWhere(
+        (e) => e.toString().split('.').last == json['category'],
+      ),
+      proficiency: ProficiencyLevel.values.firstWhere(
+        (e) => e.toString().split('.').last == json['proficiency'],
+      ),
       description: json['description'],
       certifications: json['certifications']?.cast<String>(),
-      lastAssessed: json['last_assessed'] != null ? DateTime.parse(json['last_assessed']) : null,
+      lastAssessed: json['last_assessed'] != null 
+          ? DateTime.parse(json['last_assessed']) 
+          : null,
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
     );
@@ -51,5 +60,31 @@ class Skill {
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
     };
+  }
+
+  Skill copyWith({
+    String? id,
+    String? userId,
+    String? name,
+    SkillCategory? category,
+    ProficiencyLevel? proficiency,
+    String? description,
+    List<String>? certifications,
+    DateTime? lastAssessed,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return Skill(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      name: name ?? this.name,
+      category: category ?? this.category,
+      proficiency: proficiency ?? this.proficiency,
+      description: description ?? this.description,
+      certifications: certifications ?? this.certifications,
+      lastAssessed: lastAssessed ?? this.lastAssessed,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
   }
 }

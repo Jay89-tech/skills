@@ -117,7 +117,12 @@ class _SignInFormState extends State<SignInForm> {
                     const Spacer(),
                     TextButton(
                       onPressed: () {
-                        // TODO: Implement forgot password
+                        //TODO: Implement forgot password
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Forgot password feature coming soon'),
+                          ),
+                        );
                       },
                       child: const Text(
                         'Forgot Password?',
@@ -134,152 +139,29 @@ class _SignInFormState extends State<SignInForm> {
                 ),
                 if (authController.errorMessage != null) ...[
                   const SizedBox(height: 16),
-                  DropdownButtonFormField<String>(
-                    value: _selectedDepartment,
-                    decoration: const InputDecoration(
-                      labelText: 'Department',
-                      prefixIcon: Icon(Icons.business_outlined),
-                      border: OutlineInputBorder(),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: AppColors.error.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.error.withOpacity(0.3)),
                     ),
-                    items: _departments.map((department) {
-                      return DropdownMenuItem(
-                        value: department,
-                        child: Text(department),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedDepartment = value!;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  CustomTextField(
-                    controller: TextEditingController(text: _selectedPosition),
-                    labelText: 'Position',
-                    prefixIcon: Icons.work_outlined,
-                    onChanged: (value) {
-                      _selectedPosition = value;
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Position is required';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  CustomTextField(
-                    controller: _passwordController,
-                    labelText: 'Password',
-                    prefixIcon: Icons.lock_outlined,
-                    obscureText: !_isPasswordVisible,
-                    suffixIcon: IconButton(
-                      icon: Icon(_isPasswordVisible 
-                          ? Icons.visibility_outlined 
-                          : Icons.visibility_off_outlined),
-                      onPressed: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password is required';
-                      }
-                      final result = _validationService.validatePassword(value);
-                      if (!result.isValid) {
-                        return result.message;
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  CustomTextField(
-                    controller: _confirmPasswordController,
-                    labelText: 'Confirm Password',
-                    prefixIcon: Icons.lock_outlined,
-                    obscureText: !_isConfirmPasswordVisible,
-                    suffixIcon: IconButton(
-                      icon: Icon(_isConfirmPasswordVisible 
-                          ? Icons.visibility_outlined 
-                          : Icons.visibility_off_outlined),
-                      onPressed: () {
-                        setState(() {
-                          _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
-                        });
-                      },
-                    ),
-                    validator: (value) {
-                      final result = _validationService.validateConfirmPassword(
-                        _passwordController.text, value ?? '');
-                      if (!result.isValid) {
-                        return result.message;
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Checkbox(
-                        value: _acceptTerms,
-                        onChanged: (value) {
-                          setState(() {
-                            _acceptTerms = value ?? false;
-                          });
-                        },
-                        activeColor: AppColors.primary,
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _acceptTerms = !_acceptTerms;
-                            });
-                          },
-                          child: const Text(
-                            'I accept the Terms and Conditions and Privacy Policy',
-                            style: TextStyle(fontSize: 14),
+                    child: Row(
+                      children: [
+                        Icon(Icons.error_outline, 
+                            color: AppColors.error, size: 20),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            authController.errorMessage!,
+                            style: TextStyle(color: AppColors.error),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  CustomButton(
-                    text: 'Register',
-                    isLoading: authController.isLoading,
-                    onPressed: _register,
-                  ),
-                  if (authController.errorMessage != null) ...[
-                    const SizedBox(height: 16),
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: AppColors.error.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: AppColors.error.withOpacity(0.3)),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.error_outline, 
-                              color: AppColors.error, size: 20),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              authController.errorMessage!,
-                              style: TextStyle(color: AppColors.error),
-                            ),
-                          ),
-                        ],
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ],
-              ),
+              ],
             ),
           ),
         );

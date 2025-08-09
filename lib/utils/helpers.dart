@@ -97,25 +97,98 @@ class Helpers {
     switch (level) {
       case ProficiencyLevel.beginner:
         return Icons.star_outline;
-      case ProficiencyLevel.// lib/config/api_config.dart
-class ApiConfig {
-  static const String baseUrl = 'https://api.skillsaudit.gov.za/v1';
-  static const String apiVersion = 'v1';
-  
-  // Endpoints
-  static const String loginEndpoint = '/auth/login';
-  static const String registerEndpoint = '/auth/register';
-  static const String logoutEndpoint = '/auth/logout';
-  static const String refreshTokenEndpoint = '/auth/refresh';
-  
-  static const String usersEndpoint = '/users';
-  static const String skillsEndpoint = '/skills';
-  static const String assessmentsEndpoint = '/assessments';
-  static const String departmentsEndpoint = '/departments';
-  static const String notificationsEndpoint = '/notifications';
-  
-  // Timeouts
-  static const Duration connectTimeout = Duration(seconds: 30);
-  static const Duration receiveTimeout = Duration(seconds: 30);
-  static const Duration sendTimeout = Duration(seconds: 30);
+      case ProficiencyLevel.intermediate:
+        return Icons.star_half;
+      case ProficiencyLevel.advanced:
+        return Icons.star;
+      case ProficiencyLevel.expert:
+        return Icons.star_rate;
+    }
+  }
+
+  static String getUserRoleName(UserRole role) {
+    switch (role) {
+      case UserRole.employee:
+        return 'Employee';
+      case UserRole.admin:
+        return 'Admin';
+      case UserRole.superAdmin:
+        return 'Super Admin';
+    }
+  }
+
+  static String getNotificationTypeName(NotificationType type) {
+    switch (type) {
+      case NotificationType.skillReminder:
+        return 'Skill Reminder';
+      case NotificationType.assessmentDue:
+        return 'Assessment Due';
+      case NotificationType.systemUpdate:
+        return 'System Update';
+      case NotificationType.announcement:
+        return 'Announcement';
+    }
+  }
+
+  static IconData getNotificationTypeIcon(NotificationType type) {
+    switch (type) {
+      case NotificationType.skillReminder:
+        return Icons.reminder;
+      case NotificationType.assessmentDue:
+        return Icons.assignment_late;
+      case NotificationType.systemUpdate:
+        return Icons.system_update;
+      case NotificationType.announcement:
+        return Icons.campaign;
+    }
+  }
+
+  static Color getAssessmentStatusColor(AssessmentStatus status) {
+    switch (status) {
+      case AssessmentStatus.pending:
+        return Colors.orange;
+      case AssessmentStatus.inProgress:
+        return Colors.blue;
+      case AssessmentStatus.completed:
+        return Colors.green;
+      case AssessmentStatus.expired:
+        return Colors.red;
+    }
+  }
+
+  static String getAssessmentStatusName(AssessmentStatus status) {
+    switch (status) {
+      case AssessmentStatus.pending:
+        return 'Pending';
+      case AssessmentStatus.inProgress:
+        return 'In Progress';
+      case AssessmentStatus.completed:
+        return 'Completed';
+      case AssessmentStatus.expired:
+        return 'Expired';
+    }
+  }
+
+  // Validation helpers
+  static bool isValidUrl(String url) {
+    try {
+      final uri = Uri.parse(url);
+      return uri.hasScheme && (uri.scheme == 'http' || uri.scheme == 'https');
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Number formatting
+  static String formatNumber(num number, {int decimals = 0}) {
+    final formatter = NumberFormat.decimalPattern();
+    if (decimals > 0) {
+      return formatter.format(number.toStringAsFixed(decimals));
+    }
+    return formatter.format(number);
+  }
+
+  static String formatPercentage(double value, {int decimals = 1}) {
+    return '${(value * 100).toStringAsFixed(decimals)}%';
+  }
 }

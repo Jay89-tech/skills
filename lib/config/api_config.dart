@@ -1,35 +1,22 @@
-/ lib/config/app_config.dart
-class AppConfig {
-  static const String appName = 'National Treasury Skills Audit';
-  static const String appVersion = '1.0.0';
-  static const String buildNumber = '1';
+// lib/config/api_config.dart
+class ApiConfig {
+  static const String baseUrl = 'https://api.skillsaudit.gov.za/v1';
+  static const String apiVersion = 'v1';
   
-  // Environment
-  static const String environment = 'production'; // development, staging, production
+  // Endpoints
+  static const String loginEndpoint = '/auth/login';
+  static const String registerEndpoint = '/auth/register';
+  static const String logoutEndpoint = '/auth/logout';
+  static const String refreshTokenEndpoint = '/auth/refresh';
   
-  // Features
-  static const bool enableAnalytics = true;
-  static const bool enableCrashReporting = true;
-  static const bool enablePushNotifications = true;
+  static const String usersEndpoint = '/users';
+  static const String skillsEndpoint = '/skills';
+  static const String assessmentsEndpoint = '/assessments';
+  static const String departmentsEndpoint = '/departments';
+  static const String notificationsEndpoint = '/notifications';
   
-  // Database
-  static const String databaseName = 'skills_audit.db';
-  static const int databaseVersion = 1;
-  
-  // Cache
-  static const Duration cacheExpiration = Duration(hours: 24);
-  static const int maxCacheSize = 50 * 1024 * 1024; // 50MB
-  
-  // UI
-  static const double defaultPadding = 16.0;
-  static const double cardElevation = 4.0;
-  static const double borderRadius = 8.0;
-  
-  // Validation
-  static const int minPasswordLength = 8;
-  static const int maxNameLength = 100;
-  static const int maxDescriptionLength = 500;
-  
-  static bool get isDebug => environment == 'development';
-  static bool get isProduction => environment == 'production';
+  // Timeouts
+  static const Duration connectTimeout = Duration(seconds: 30);
+  static const Duration receiveTimeout = Duration(seconds: 30);
+  static const Duration sendTimeout = Duration(seconds: 30);
 }

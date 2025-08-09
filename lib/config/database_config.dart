@@ -2,21 +2,21 @@
 class DatabaseConfig {
   static const String databaseName = 'skills_audit.db';
   static const int databaseVersion = 1;
-  
+
   // Table names
   static const String usersTable = 'users';
   static const String skillsTable = 'skills';
   static const String assessmentsTable = 'assessments';
   static const String notificationsTable = 'notifications';
   static const String settingsTable = 'settings';
-  
-  // SQL Scripts
+
+  // Create table statements
   static const String createUsersTable = '''
     CREATE TABLE $usersTable (
       id TEXT PRIMARY KEY,
       name TEXT NOT NULL,
-      email TEXT UNIQUE NOT NULL,
-      employee_id TEXT UNIQUE NOT NULL,
+      email TEXT NOT NULL UNIQUE,
+      employee_id TEXT NOT NULL UNIQUE,
       department TEXT NOT NULL,
       role TEXT NOT NULL,
       profile_picture TEXT,
@@ -27,7 +27,7 @@ class DatabaseConfig {
       sync_status INTEGER DEFAULT 0
     )
   ''';
-  
+
   static const String createSkillsTable = '''
     CREATE TABLE $skillsTable (
       id TEXT PRIMARY KEY,
@@ -44,7 +44,7 @@ class DatabaseConfig {
       FOREIGN KEY (user_id) REFERENCES $usersTable (id)
     )
   ''';
-  
+
   static const String createAssessmentsTable = '''
     CREATE TABLE $assessmentsTable (
       id TEXT PRIMARY KEY,
@@ -55,12 +55,14 @@ class DatabaseConfig {
       completed_at TEXT,
       created_at TEXT NOT NULL,
       updated_at TEXT NOT NULL,
+      answers TEXT,
+      feedback TEXT,
       sync_status INTEGER DEFAULT 0,
       FOREIGN KEY (user_id) REFERENCES $usersTable (id),
       FOREIGN KEY (skill_id) REFERENCES $skillsTable (id)
     )
   ''';
-  
+
   static const String createNotificationsTable = '''
     CREATE TABLE $notificationsTable (
       id TEXT PRIMARY KEY,
@@ -70,10 +72,11 @@ class DatabaseConfig {
       type TEXT NOT NULL,
       is_read INTEGER DEFAULT 0,
       created_at TEXT NOT NULL,
+      data TEXT,
       FOREIGN KEY (user_id) REFERENCES $usersTable (id)
     )
   ''';
-  
+
   static const String createSettingsTable = '''
     CREATE TABLE $settingsTable (
       key TEXT PRIMARY KEY,
@@ -81,4 +84,13 @@ class DatabaseConfig {
       updated_at TEXT NOT NULL
     )
   ''';
+
+  // Indices for better performance
+  static const List<String> createIndices = [
+    'CREATE INDEX idx_skills_user_id ON $skillsTable (user_id)',
+    'CREATE INDEX idx_assessments_user_id ON $assessmentsTable (user_id)',
+    'CREATE INDEX idx_assessments_skill_id ON $assessmentsTable (skill_id)',
+    'CREATE INDEX idx_notifications_user_id ON $notificationsTable (user_id)',
+    'CREATE INDEX idx_notifications_is_read ON $notificationsTable (is_read)',
+  ];
 }

@@ -1,4 +1,4 @@
-/ lib/services/validation_service.dart
+// lib/services/validation_service.dart
 class ValidationService {
   static final ValidationService _instance = ValidationService._internal();
   factory ValidationService() => _instance;
@@ -6,8 +6,7 @@ class ValidationService {
 
   // Email validation
   bool isValidEmail(String email) {
-    final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}
-  );
+    final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
     return emailRegex.hasMatch(email.trim());
   }
 
@@ -42,22 +41,19 @@ class ValidationService {
 
   // Name validation
   bool isValidName(String name) {
-    final nameRegex = RegExp(r'^[a-zA-Z\s]{2,50}
-  );
+    final nameRegex = RegExp(r'^[a-zA-Z\s]{2,50}$');
     return nameRegex.hasMatch(name.trim());
   }
 
   // Employee ID validation
   bool isValidEmployeeId(String employeeId) {
-    final idRegex = RegExp(r'^[A-Z0-9]{6,10}
-  );
+    final idRegex = RegExp(r'^[A-Z0-9]{6,10}$');
     return idRegex.hasMatch(employeeId.trim().toUpperCase());
   }
 
   // Phone number validation
   bool isValidPhoneNumber(String phoneNumber) {
-    final phoneRegex = RegExp(r'^\+?[1-9]\d{1,14}
-  );
+    final phoneRegex = RegExp(r'^\+?[1-9]\d{1,14}$');
     return phoneRegex.hasMatch(phoneNumber.trim().replaceAll(RegExp(r'[\s-()]'), ''));
   }
 
@@ -66,8 +62,7 @@ class ValidationService {
     if (skillName.trim().isEmpty) return false;
     if (skillName.length < 2 || skillName.length > 100) return false;
     
-    final skillRegex = RegExp(r'^[a-zA-Z0-9\s\-\+\#\.]+
-  );
+    final skillRegex = RegExp(r'^[a-zA-Z0-9\s\-\+\#\.]+$');
     return skillRegex.hasMatch(skillName.trim());
   }
 

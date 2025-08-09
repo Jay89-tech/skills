@@ -1,4 +1,3 @@
-/ lib/services/notification_service.dart
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../models/notification_model.dart';
@@ -105,7 +104,7 @@ class NotificationService {
       id,
       title,
       body,
-      scheduledDate,
+      TZDateTime.from(scheduledDate, tz.local),
       platformChannelSpecifics,
       payload: payload,
       uiLocalNotificationDateInterpretation:

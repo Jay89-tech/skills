@@ -1,3 +1,6 @@
+// lib/models/user_model.dart
+import '../utils/enums.dart';
+
 class User {
   final String id;
   final String name;
@@ -32,7 +35,9 @@ class User {
       email: json['email'],
       employeeId: json['employee_id'],
       department: json['department'],
-      role: UserRole.values.firstWhere((e) => e.toString().split('.').last == json['role']),
+      role: UserRole.values.firstWhere(
+        (e) => e.toString().split('.').last == json['role'],
+      ),
       profilePicture: json['profile_picture'],
       phoneNumber: json['phone_number'],
       position: json['position'],

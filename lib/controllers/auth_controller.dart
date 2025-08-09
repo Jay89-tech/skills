@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import '../services/database_service.dart';
 import '../models/user_model.dart';
-import '../utils/enums.dart';
 
 class AuthController extends ChangeNotifier {
   final AuthService _authService = AuthService();
